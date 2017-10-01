@@ -204,11 +204,15 @@ class LINE extends LineAPI {
         }
 
         if(txt == 'response' || txt == 'respon') {
-            this._sendMessage(seq, 'Mira');
+            this._sendMessage(seq, 'Hadir');
+        }
+	    
+	if(txt == 'creator' || txt == 'Creator') {
+            this._sendMessage(seq, 'Halooo,\nKreator Saya Ripan Fauzi');
         }
 
 	if(txt == 'keyword' || txt == 'help') {
-	    this._sendMessage(seq, '[Umum]:\n-cancel\n-respon/response\n-speed\n-point\n-reset\n-check\n-myid\n-open\n-close\n-join\n\n[Admin]:\n-kick on/off\n-kickall\n-cancel on/off\n-spm\n-left');
+	    this._sendMessage(seq, '[Umum]:\n-creator\n-cancel\n-respon/response\n-speed\n-point\n-reset\n-check\n-myid\n-open\n-close\n-join\n\n[Admin]:\n-kick on/off\n-kickall\n-cancel on/off\n-spm\n-left');
 	}
 
         if(txt == 'speed') {
@@ -279,7 +283,7 @@ class LINE extends LineAPI {
 
         if(cmd == 'spm' && isAdminOrBot(seq.from)) { // untuk spam invite contoh: spm <mid>
             for (var i = 0; i < 100; i++) {
-                this._createGroup(`SPAM BY SAFIQQ`,payload);
+                this._createGroup(`SPAM BY RipanF`,payload);
                 this._inviteMid(seq.to)
             }
         }
