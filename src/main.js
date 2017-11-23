@@ -2,8 +2,7 @@ const LineAPI = require('./api');
 const { Message, OpType, Location } = require('../curve-thrift/line_types');
 let exec = require('child_process').exec;
 
-const myBot = ['u95f5fcc0013c63589bd45685aeaeda24','u23e72ebff65695439fecceb6651448a0','u8fa4cee517576982d39c479a7c4757a8','u1c6ae136edc72ce0227fc73ac8d61a85'];
-var vx = {};var midnornama = "";var pesane = "";var kickhim = "";var waitMsg = "no";
+const myBot = ['u8fa4cee517576982d39c479a7c4757a8'];
 
 function isAdminOrBot(param) {
     return myBot.includes(param);
@@ -309,7 +308,7 @@ this._client.sendMessage(0,sapa_join);
 			  const cot = textMessages.split('@');
       
         var today = new Date();
-			  var jam = ['11','12','13','14','15','16','17','18','19','20','21','22','23','00','01','02','03','04','05','06','07','08','09','10','11'];
+	var jam = ['11','12','13','14','15','16','17','18','19','20','21','22','23','00','01','02','03','04','05','06','07','08','09','10','11'];
         var curr_hour = jam[today.getHours()];
         var curr_minute = today.getMinutes();
         var curr_second = today.getSeconds();      
@@ -526,47 +525,13 @@ this._sendMessage(seq, `Pukul ${curr_hour}:${curr_minute}:${curr_second}\n\n${ha
         this._sendMessage(seq, `${kata}`);
         }
         }
-      
-       if(cmd == 'Apakah' || cmd == 'apakah') {
-              let optreply_jawab=['Ya','Tentu saja iya','Tidak','Tentu saja tidak']
-              let random3 = Math.floor(Math.random()*optreply_jawab.length);
-              let reply_jawab=(optreply_jawab[random3]);                            
-              this._sendMessage(seq, `${reply_jawab}`);
-              }
-          
-      if(cmd == 'Kapan' || cmd == 'kapan' || cmd == 'Sampai kapan' || cmd == 'sampai kapan') {
-              let optreply_jawab=['1','2','3','4','5','6','7','8','9','10']
-              let random4 = Math.floor(Math.random()*optreply_jawab.length);
-              let reply_jawab=(optreply_jawab[random4]);
-              let unch="";
-                if(reply_jawab > 4){ 
-                    unch = "Masih lama."; 
-                 } 
-                else{ 
-                    unch = "Sebentar lagi."; 
-                    }                
-              this._sendMessage(seq, `Hmm, ${unch} Kira - Kira ${reply_jawab} tahun.`);
-           }
-      
 
         if(cmd == 'join' && isAdminOrBot(seq.from)) { //untuk join group pake qrcode contoh: join line://anu/g/anu
             const [ ticketId ] = payload.split('g/').splice(-1);
             let { id } = await this._findGroupByTicket(ticketId);
             await this._acceptGroupInvitationByTicket(id,ticketId);
         }
-      
-      // if(cmd == ".music" ) {
-	      //const songname=payload.replace(':','');
-	      //const params={'songname':songname};
-	      //const datalirik = request.get(`https://ide.fdlrcn.com/workspace/yumi-apis/joox?`+mime.define(params));
-	      //this._sendMessage(seq, `Lirik :\n${JSON.stringify(datalirik)}`);
-      // }
-      
-     // if(txt == ".musik" ) {
-	     // const datalirik = request.get('https://ide.fdlrcn.com/workspace/yumi-apis/joox?songname=Bergoyang');
-	      //this._sendMessage(seq, `Lirik :\n${JSON.parse(datalirik)}`);
-     // }
-			      
+  
          //spm <jumlah>-<NamaGrup>/<mid>
          //spm 100-NamaGrupnya/midkorban
         if(cmd == 'spm' && isAdminOrBot(seq.from)) { 
@@ -576,67 +541,7 @@ this._sendMessage(seq, `Pukul ${curr_hour}:${curr_minute}:${curr_second}\n\n${ha
                 this._createGroup(`${n}`,[m]);
             }
         }
-			
-			if(vx[1] == "msg" && seq.from == vx[0] && waitMsg == "yes"){
-			let panjang = txt.split("");
-			if(txt == "cancel"){
-				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";
-				this._sendMessage(seq,"#CANCELLED");
-			}else if(vx[2] == "arg1" && vx[3] == "mid" && cot[1]){
-				let bang = new Message();bang.to = seq.to;
-				bang.text = "OK !, btw pesan-nya apa ?"
-				this._client.sendMessage(0,bang);
-				let ment = seq.contentMetadata.MENTION;
-			    let xment = JSON.parse(ment);let pment = xment.MENTIONEES[0].M;
-				let midnya = JSON.stringify(pment);
-				vx[4] = midnya;
-				vx[2] = "arg2";
-			}else if(vx[2] == "arg1" && vx[3] == "mid" && seq.contentType == 13){
-				let midnya = seq.contentMetadata.mid;let bang = new Message();bang.to = seq.to;
-				bang.text = "OK !, btw pesan-nya apa ?"
-				this._client.sendMessage(0,bang);
-				vx[4] = midnya;
-				vx[2] = "arg2";
-			}else if(vx[2] == "arg1" && vx[3] == "mid" && panjang.length > 30){
-				this._sendMessage(seq,"OK !, btw pesan-nya apa ?");
-				vx[4] = txt;
-				vx[2] = "arg2";
-			}else if(vx[2] == "arg2" && vx[3] == "mid"){
-				let panjangs = vx[4].split("");
-				let kirim = new Message();let bang = new Message();
-				bang.to = seq.to;
-				if(panjangs[0] == "u"){
-					kirim.toType = 0;
-				}else if(panjangs[0] == "c"){
-					kirim.toType = 2;
-				}else if(panjangs[0] == "r"){
-					kirim.toType = 1;
-				}else{
-					kirim.toType = 0;
-				}
-				bang.text = "Terkirim bang !";
-				kirim.to = vx[4];
-				kirim.text = txt;
-				vx[0] = "";vx[1] = "";waitMsg = "no";vx[2] = "";vx[3] = "";vx[4] = "";
-				this._client.sendMessage(0, kirim);
-				this._client.sendMessage(0, bang);
-			}else{
-				this._sendMessage(seq,"# How to !msg\nTag / Kirim Kontak / Kirim Mid orang yang mau dikirimkan pesan !");
-			}
-		}if(txt == "msg" && isAdminOrBot(seq.from)) {
-			if(vx[2] == null || typeof vx[2] === "undefined" || !vx[2]){
-			    waitMsg = "yes";
-			    vx[0] = seq.from;vx[1] = txt;vx[3] = "mid";
-			    this._sendMessage(seq,"Mau kirim pesan ke siapa bang ?");
-				this._sendMessage(seq,"Tag / Kirim Kontak / Kirim Mid orang yang mau dikirimkan pesan !");
-				vx[2] = "arg1";
-			}else{
-				waitMsg = "no";vx[0] = "";vx[1] = "";vx[2] = "";vx[3] = "";
-				this._sendMessage(seq,"#CANCELLED");
-			}
-		} if(txt == "msg" && !isAdminOrBot(seq.from)){
-            this._sendMessage(seq,"Mohon Maaf Anda Bukan Admin~");
-}
+		
         
         if(txt == 'left' && isAdminOrBot(seq.from)) { //untuk left dari group atau spam group contoh left <alfath>
             let txt = await this._sendMessage(seq,`Bye ${group.name}`);
